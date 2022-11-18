@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/AfshinSharifnia/project2-iYOU-backend#readme",
   "dependencies": {
+    "cookie-session": "^2.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.7.2",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "passport": "^0.5.3",
+    "passport-37signals": "^1.0.0"
   }
 }
