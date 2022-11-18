@@ -13,7 +13,7 @@ async function main() {
       user: process.env.MONGODB_USER,
 
       pass: process.env.MONGODB_PASSWORD,
-    }
+    },
   );
 }
 console.log("Connected to MongoDB"), main().catch((err) => console.log(err));
