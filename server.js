@@ -105,13 +105,13 @@ app.use(
   }),
 );
 
-// router for auth routes
-app.use("/api/auth", authRoute);
-app.use("/api/profile", profileRoute);
-
 // Initialize Passport!
 app.use(passport.initialize());
 app.use(passport.session());
+
+// router for auth routes
+app.use("/api/auth", authRoute);
+app.use("/api/profile", profileRoute);
 
 // SERVER - start and listen
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));

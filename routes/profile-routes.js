@@ -5,7 +5,7 @@ const router = Router();
 // AUTH RECHECK
 const authCheck = (req, res, next) => {
   if (!req.user) {
-    res.redirect("/auth/login");
+    res.redirect("/api/auth/login");
   } else {
     next();
   }
@@ -15,7 +15,7 @@ const authCheck = (req, res, next) => {
 // 	res.render('profile', { user: req.user });
 // });
 
-// THANK FOR LOGGING - CLOSE THIS WINDOW - for front end
+// logged-in
 router.get("/", (req, res) => {
   res.send("you are logged in and this is your profile - " + req.user);
   //   res.render('profile', { user: req.user });
