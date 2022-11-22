@@ -55,7 +55,7 @@ passport.use(
         if (currentUser) {
           // if already have user
           currentUser.accessToken = accessToken;
-          token = accessToken;
+          // token = accessToken;
           currentUser.save().then(console.log("user is: ", currentUser));
           done(null, currentUser);
         } else {

@@ -26,6 +26,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/myProfile", async (req, res) => {
+  console.log("REQUSER:", req.user);
   const basecampId = req.query.userId;
   console.log("BASECAMP USER ID: ", basecampId);
   console.log(typeof basecampId);
