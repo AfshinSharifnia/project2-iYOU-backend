@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import passport from "passport"; //using v.5 to work with cookie-session
 import cookieSession from "cookie-session";
 import passportStrategy from "passport-37signals";
+import cors from "cors";
 
 const Thirty7SignalsStrategy = passportStrategy.Strategy;
 
@@ -36,7 +37,8 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-//
+let token = "";
+
 passport.use(
   new Thirty7SignalsStrategy(
     {
@@ -45,11 +47,16 @@ passport.use(
       callbackURL: "/api/auth/37signals/callback",
     },
     function (accessToken, refreshToken, profile, done) {
+      console.log("ACCESS TOKEN:", accessToken);
+      console.log("REFRESH TOKEN:", refreshToken);
       // check if user already exists in db based on id
       User.findOne({ basecampId: profile.id }).then((currentUser) => {
+        console.log(profile);
         if (currentUser) {
           // if already have user
-          console.log("user is: ", currentUser);
+          currentUser.accessToken = accessToken;
+          token = accessToken;
+          currentUser.save().then(console.log("user is: ", currentUser));
           done(null, currentUser);
         } else {
           // if not, create user in db
@@ -57,6 +64,7 @@ passport.use(
             firstName: profile.name.givenName,
             displayName: profile.displayName,
             basecampId: profile.id,
+            accessToken: accessToken,
           })
             .save()
             .then((newUser) => {
@@ -96,6 +104,9 @@ main();
 // EXPRESS SERVER setup
 // --------------
 const app = express();
+
+// CORS test
+app.use(cors());
 
 // cookies for authentication
 app.use(

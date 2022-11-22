@@ -1,0 +1,43 @@
+{
+    id: '24503434',
+    displayName: 'Vince Iannelli',
+    name: { familyName: 'Iannelli', givenName: 'Vince'
+    },
+    emails: [
+        { value: 'viannelli@gmail.com'
+        }
+    ],
+    provider: '37signals',
+    _raw: '{
+        "expires_at": "2022-12-04T18:30:59.000Z",
+        "identity": {
+            "id": 24503434,
+            "email_address": "viannelli@gmail.com",
+            "first_name": "Vince",
+            "last_name": "Iannelli"
+        },
+        "accounts": [
+            {
+                "id": 3951314,
+                "name": "Inception",
+                "product": "bc3",
+                "href": "https://3.basecampapi.com/3951314",
+                "app_href": "https://3.basecamp.com/3951314",
+                "hidden": false
+            }
+        ]
+    }',
+    _json: {
+      expires_at: '2022-12-04T18: 30: 59.000Z',
+      identity: {
+        id: 24503434,
+        email_address: 'viannelli@gmail.com',
+        first_name: 'Vince',
+        last_name: 'Iannelli'
+        },
+      accounts: [
+            [Object
+            ]
+        ]
+    }
+}

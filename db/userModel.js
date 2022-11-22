@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   displayName: String,
   basecampId: String,
   linkedInURL: String,
+  accessToken: String,
 });
 
 export const User = mongoose.model("user", userSchema);
