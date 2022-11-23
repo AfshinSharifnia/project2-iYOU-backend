@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   basecampId: String,
   linkedInURL: String,
   accessToken: String,
+  anotherField: String, //TESTING updateProfile endpoint
 });
 
 export const User = mongoose.model("user", userSchema);

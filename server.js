@@ -37,8 +37,6 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-let token = "";
-
 passport.use(
   new Thirty7SignalsStrategy(
     {
@@ -48,14 +46,12 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       console.log("ACCESS TOKEN:", accessToken);
-      console.log("REFRESH TOKEN:", refreshToken);
       // check if user already exists in db based on id
       User.findOne({ basecampId: profile.id }).then((currentUser) => {
         console.log(profile);
         if (currentUser) {
           // if already have user
           currentUser.accessToken = accessToken;
-          // token = accessToken;
           currentUser.save().then(console.log("user is: ", currentUser));
           done(null, currentUser);
         } else {
