@@ -21,6 +21,7 @@ const authCheck = (req, res, next) => {
 //   //   res.render('profile', { user: req.user });
 // });
 
+// USED BY NAVBAR FOR PROFILE INFO
 router.get("/myProfile", async (req, res) => {
   console.log("REQUSER:", req.user);
   const basecampId = req.user.basecampId;
@@ -36,8 +37,6 @@ router.get("/myProfile", async (req, res) => {
       // done(null, currentUser);
     }
   });
-
-  // TODO: fetch user from DB using basecampID
   console.log("TOKEN: ", token);
   const response = await fetch(
     `https://3.basecampapi.com/${process.env.INCEPTIONU_ACCOUNT}/my/profile.json`, //InceptionU account
@@ -53,11 +52,30 @@ router.get("/myProfile", async (req, res) => {
     const userInfo = await response.json();
     console.log("RESPONSE OK: ", userInfo);
     res.send(userInfo);
+    // res.send(currentUser);
     return;
   } else {
     console.log(response);
     res.status(500).end();
   }
+});
+
+// GET PROFILE DB FOR EDITING
+router.get("/myProfileDB", async (req, res) => {
+  console.log("REQUSER:", req.user);
+  const basecampId = req.user.basecampId;
+  console.log("BASECAMP USER ID: ", basecampId);
+  // console.log(typeof basecampId);
+  await User.findOne({ basecampId: basecampId }).then((currentUser) => {
+    if (currentUser) {
+      console.log("User found!");
+      res.send(currentUser);
+      return;
+    } else {
+      console.log(response);
+      res.status(500).end();
+    }
+  });
 });
 
 // TO UPDATE DB RECORDS - send query field and fieldData
@@ -77,10 +95,12 @@ router.get("/updateProfile", async (req, res) => {
       currentUser
         .save()
         .then(console.log(`${field} updated with ${fieldData}`));
-      // done(null, currentUser);
+      res.send(currentUser);
+      return;
     } else {
       // if not, create user in db
       console.log("missing db record, cannot update; please re-login");
+      res.error("missing db record, cannot update; please re-login");
     }
   });
 });
