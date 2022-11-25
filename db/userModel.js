@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
   q3: String,
   q4: String,
   q5: String,
+  githubURL: String,
+  careerBlueprint: String,
 });
 
 export const User = mongoose.model("user", userSchema);
