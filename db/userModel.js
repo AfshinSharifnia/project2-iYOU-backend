@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   q5: String,
   githubURL: String,
   careerBlueprint: String,
-  baseCampURL: String,
+  basecampURL: String,
   schedule: String,
   events: String,
   techslides: String,
