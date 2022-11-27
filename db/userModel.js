@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   displayName: String,
   basecampId: String,
   linkedInURL: String,
+  luminaURL: String,
   accessToken: String,
   anotherField: String, //TESTING updateProfile endpoint
   q0: String,
