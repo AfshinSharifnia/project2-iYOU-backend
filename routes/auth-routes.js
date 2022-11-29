@@ -22,7 +22,7 @@ router.get(
   "/37signals/callback",
   passport.authenticate("37signals"),
   function (req, res) {
-    res.redirect("http://localhost:3000/"); //TO REACT
+    res.redirect("http://localhost:3000/dashboard"); //TO REACT
     // res.send('got here');
     // res.send(req.user);
   },
