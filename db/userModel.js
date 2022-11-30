@@ -16,8 +16,21 @@ const userSchema = new mongoose.Schema({
   q3: String,
   q4: String,
   q5: String,
+  q6: String,
+  q7: String,
+  q8: String,
+  q9: String,
+  q10: String,
+  q11: String,
   githubURL: String,
   careerBlueprint: String,
+  hometown: String,
+  faveFood: String,
+  tagline: String,
+  birthDate: Date,
+  luminaURL: String,
+  avatarURL: String,
+  pronouns: String,
 });
 
 export const User = mongoose.model("user", userSchema);
