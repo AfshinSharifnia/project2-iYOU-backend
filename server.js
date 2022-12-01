@@ -5,6 +5,7 @@ import passport from "passport"; //using v.5 to work with cookie-session
 import cookieSession from "cookie-session";
 import passportStrategy from "passport-37signals";
 import cors from "cors";
+import fetch from "node-fetch";
 
 const Thirty7SignalsStrategy = passportStrategy.Strategy;
 
@@ -44,31 +45,57 @@ passport.use(
       clientSecret: process.env.THIRTY7SIGNALS_SECRET_ID,
       callbackURL: "/api/auth/37signals/callback",
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       console.log("ACCESS TOKEN:", accessToken);
-      // check if user already exists in db based on id
-      User.findOne({ basecampId: profile.id }).then((currentUser) => {
-        console.log(profile);
-        if (currentUser) {
-          // if already have user
-          currentUser.accessToken = accessToken;
-          currentUser.save().then(console.log("user is: ", currentUser));
-          done(null, currentUser);
-        } else {
-          // if not, create user in db
-          new User({
-            firstName: profile.name.givenName,
-            displayName: profile.displayName,
-            basecampId: profile.id,
-            accessToken: accessToken,
-          })
-            .save()
-            .then((newUser) => {
-              console.log("new user created: " + newUser);
-              done(null, newUser);
-            });
-        }
-      });
+
+      // do an API call for more info on user (to get Avatar URL)
+      const response = await fetch(
+        `https://3.basecampapi.com/${process.env.INCEPTIONU_ACCOUNT}/my/profile.json`, //InceptionU account
+        {
+          headers: {
+            "User-Agent": "iYou app (inceptionu.com)",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+        },
+      );
+      if (response.ok) {
+        const userInfo = await response.json();
+        console.log("RESPONSE OK: ", userInfo);
+        // response.status(200).end();
+        // response.send("");
+        // res.send(currentUser);
+
+        // check if user already exists in db based on id
+        User.findOne({ basecampId: profile.id }).then((currentUser) => {
+          console.log(profile);
+          if (currentUser) {
+            // if already have user
+            currentUser.accessToken = accessToken;
+            currentUser.save().then(console.log("user is: ", currentUser));
+            done(null, currentUser);
+          } else {
+            // if not, create user in db
+            new User({
+              firstName: profile.name.givenName,
+              displayName: profile.displayName,
+              basecampId: profile.id,
+              accessToken: accessToken,
+              firstLogin: "true",
+              avatarURL: userInfo.avatar_url,
+            })
+              .save()
+              .then((newUser) => {
+                console.log("new user created: " + newUser);
+                done(null, newUser);
+              });
+          }
+        });
+        return;
+      } else {
+        console.log(response);
+        response.status(500).end();
+      }
     },
   ),
 );

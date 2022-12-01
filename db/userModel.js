@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
   luminaURL: String,
   avatarURL: String,
   pronouns: String,
+  firstLogin: String,
 });
 
 export const User = mongoose.model("user", userSchema);
