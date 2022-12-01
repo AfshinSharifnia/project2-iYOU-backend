@@ -78,6 +78,24 @@ router.get("/myProfileDB", async (req, res) => {
   });
 });
 
+// GET PROFILE DB FOR PROFILE PAGE
+router.get("/profilePage", async (req, res) => {
+  console.log("REQUSER:", req.user);
+  const basecampId = req.query.userId;
+  console.log("BASECAMP USER ID: ", basecampId);
+  // console.log(typeof basecampId);
+  await User.findOne({ basecampId: basecampId }).then((currentUser) => {
+    if (currentUser) {
+      console.log("User found!");
+      res.send(currentUser);
+      return;
+    } else {
+      console.log(response);
+      res.status(500).end();
+    }
+  });
+});
+
 // TO UPDATE DB RECORDS - send query field and fieldData
 router.get("/updateProfile", async (req, res) => {
   console.log("field is ", req.query.field);
