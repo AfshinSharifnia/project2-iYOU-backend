@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import { User } from "../db/userModel.js";
 
 const router = Router();
 
@@ -21,8 +22,24 @@ router.get(
 router.get(
   "/37signals/callback",
   passport.authenticate("37signals"),
-  function (req, res) {
-    res.redirect("http://localhost:3000/"); //TO REACT
+  async function (req, res) {
+    const basecampId = req.user.basecampId;
+    let userinfo;
+    console.log("BASECAMP USER ID: ", basecampId);
+    // console.log(typeof basecampId);
+    await User.findOne({ basecampId: basecampId }).then((currentUser) => {
+      if (currentUser) {
+        console.log("User found!");
+        userinfo = currentUser;
+        return;
+      } else {
+        console.log(response);
+        res.status(500).end();
+      }
+    });
+    if (userinfo.firstLogin === "true")
+      res.redirect("http://localhost:3000/edit");
+    else res.redirect("http://localhost:3000/dashboard"); //TO REACT
     // res.send('got here');
     // res.send(req.user);
   },
