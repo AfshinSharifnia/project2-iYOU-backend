@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   avatarURL: String,
   pronouns: String,
   firstLogin: String,
+  basecampURL: String,
 });
 
 export const User = mongoose.model("user", userSchema);
