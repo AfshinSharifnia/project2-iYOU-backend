@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   displayName: String,
   basecampId: String,
   linkedInURL: String,
+  luminaURL: String,
   accessToken: String,
   anotherField: String, //TESTING updateProfile endpoint
   q0: String,
@@ -24,15 +25,13 @@ const userSchema = new mongoose.Schema({
   q11: String,
   githubURL: String,
   careerBlueprint: String,
-  hometown: String,
-  faveFood: String,
-  tagline: String,
-  birthDate: Date,
-  luminaURL: String,
-  avatarURL: String,
-  pronouns: String,
-  firstLogin: String,
   basecampURL: String,
+  schedule: String,
+  events: String,
+  techslides: String,
+  homework: String,
+  dailychallenge: String,
+  survey: String,
 });
 
 export const User = mongoose.model("user", userSchema);
